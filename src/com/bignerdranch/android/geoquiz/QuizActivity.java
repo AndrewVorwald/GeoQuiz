@@ -17,6 +17,7 @@ public class QuizActivity extends ActionBarActivity {
 	private Button mFalseButton;
 	private ImageButton mNextButton;
 	private ImageButton mPrevButton;
+	private Button mCheatButton;
 	private TextView mQuestionTextView;
 	private static final String KEY_INDEX = "index";
 	
@@ -55,6 +56,15 @@ public class QuizActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "onCreate(Bundle) called");
 		setContentView(R.layout.activity_quiz);
+		
+		
+		mCheatButton = (Button)findViewById(R.id.cheat_button);
+		mCheatButton.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View v){
+				//Start Cheat activity
+			}
+		});
 		
 		mQuestionTextView = (TextView)findViewById(R.id.question_text_view);
 		mQuestionTextView.setOnClickListener(new View.OnClickListener(){
