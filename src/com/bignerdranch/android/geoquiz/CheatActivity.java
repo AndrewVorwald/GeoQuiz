@@ -17,24 +17,19 @@ public class CheatActivity extends Activity {
 	private boolean mAnswerIsTrue;
 	private TextView mAnswerTextView;
 	private Button mShowAnswer;
-	private boolean mUserCheated;
-	
+	private boolean mClickedCheat;
 	
 	private void setAnswerShownResult(boolean isAnswerShown){
 		Intent data = new Intent();
 		data.putExtra(EXTRA_ANSWER_SHOWN, isAnswerShown);
 		setResult(RESULT_OK, data);
-		mUserCheated = isAnswerShown;
 	}
 	
      @Override
      protected void onCreate(Bundle savedInstanceState){
     	 
     	 // This makes sure that answer_shown does not pass true unless the user presses the button
-    	 if (savedInstanceState != null) {
-    		 mUserCheated = savedInstanceState.getBoolean(DID_CHEAT);
-    	 }
-    	 else
+    	 
     	 setAnswerShownResult(false);
     	 
     	 
@@ -56,9 +51,23 @@ public class CheatActivity extends Activity {
     				 mAnswerTextView.setText(R.string.false_button);
     			 }
     			 setAnswerShownResult(true);
+    			 mClickedCheat = true;
     		 }
     	 });
-    	 
+    	 if (savedInstanceState != null){
+    		 mClickedCheat = savedInstanceState.getBoolean(DID_CHEAT);
+    	 }
+    	 if(mClickedCheat == true)
+    	 {
+    		 if (mAnswerIsTrue){
+				 mAnswerTextView.setText(R.string.true_button);
+			 }
+			 else{
+				 mAnswerTextView.setText(R.string.false_button);
+				
+			 }
+    		 setAnswerShownResult(true);
+    	 }
     	
     		
     	}
@@ -67,6 +76,6 @@ public class CheatActivity extends Activity {
 public void onSaveInstanceState(Bundle savedInstanceState){
 super.onSaveInstanceState(savedInstanceState);
 Log.i(TAG, "onSaveInstanceState");
-savedInstanceState.putBoolean(DID_CHEAT, mUserCheated);
+savedInstanceState.putBoolean(DID_CHEAT, mClickedCheat);
      }
 }
